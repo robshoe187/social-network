@@ -49,3 +49,7 @@ const ThoughtSchema = new Schema(
         }
     }
 )
+
+const Thought = model('Thoughts', ThoughtSchema);
+
+module.exports = Thought;

@@ -11,11 +11,7 @@ const UserSchema = new Schema (
         email: {
             type: String,
             unique: true,
-            required: true,
-            validate: {
-                validator: () => Promise.resolve(false),
-                message: 'Email validation failed'
-              }
+            required: true
         },
         thoughts: [
             {
@@ -25,8 +21,8 @@ const UserSchema = new Schema (
           ],
         friends: [
             {
-              type: Schema.Types.ObjectId,
-              ref: 'friends'
+              type: Schema.Types.ObjectId ,
+              ref: 'User'
             }
           ]  
     },
@@ -38,17 +34,13 @@ const UserSchema = new Schema (
     }
 );
 
-//check for email validation
-user.validate().catch(error => {
-    assert.ok(error);
-    assert.equal(error.errors.message, 'Email validation failed');
-  });
-UserSchema.virtual('friendCount').get(function(){
-    return this.friends.reduce(
-        (total, friends) => friends.length + 1
-    );
-});
+//total friend count
+// UserSchema.virtual('friendCount').get(function() {
+//     return this.friends.reduce(
+//         (friends) => friends.length + 1
+//     );
+// });
 
-  const User = model('User', UserSchema);
+const User = model('User', UserSchema);
 
-  module.exports = Pizza;
+module.exports = User;
